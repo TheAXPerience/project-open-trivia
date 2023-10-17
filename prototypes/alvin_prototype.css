@@ -1,0 +1,97 @@
+html, body {
+    font-family: fantasy;
+    font-size: 18px;
+    background-color: #4639BC;
+}
+
+.center {
+    text-align: center;
+}
+
+.backdrop {
+    position: absolute;
+    padding: 16px;
+    padding-bottom: 24px;
+    width: 75%;
+    height: 75%;
+    background-color: #FFFFFF44;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 5px 5px;
+    overflow: scroll;
+}
+
+.center-vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 h2 h3 {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.titledrop {
+    background-color: #FFFFFF44;
+    height: 80px;
+    min-width: 325px;
+    width: 50%;
+    margin: 3% auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px;
+}
+
+.data-form div {
+    margin-bottom: 2%;
+}
+
+.data-form h3 {
+    margin: 4px;
+}
+
+.data-form input, .data-form button, .data-form select {
+    min-width: 200px;
+    width: 33%;
+    height: 48px;
+    text-align: center;
+    font-size: 18px;
+    background-color: #FFFFFFBB;
+    border-radius: 5px;
+    box-shadow: 2px 2px;
+}
+
+.questiondrop {
+    background-color: #FFFFFF44;
+    min-height: 160px;
+    min-width: 325px;
+    width: 50%;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 2px 2px;
+    margin: 3% auto;
+}
+
+.answerdrop {
+    min-width: 250px;
+    width: 50%;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.answerdrop button {
+    margin: 1% 0px;
+    min-height: 48px;
+    text-align: center;
+    font-size: 18px;
+    background-color: #FFFFFFBB;
+    border-radius: 5px;
+    box-shadow: 2px 2px;
+}
