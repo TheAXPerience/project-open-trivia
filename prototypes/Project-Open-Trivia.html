@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: black;
+        }
+
+        .container {
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: purple;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        #question {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .answer {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #33cc99;
+            color: black;
+        }
+
+        .answer:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trivia Game</h1>
+        <div id="question">What is the capital of South Korea?</div>
+        <div class="answer" id="answer1">Seoul</div>
+        <div class="answer" id="answer2">Tokyo</div>
+        <div class="answer" id="answer3">Beijing</div>
+        <div class="answer" id="answer4">Manila</div>
+    </div>
+</body>
+</html>
