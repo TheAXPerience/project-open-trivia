@@ -1,0 +1,136 @@
+:root {
+    --background-color: #322653;
+    --card-color: #8062D6;
+    --title-color: #9288F8;
+    --button-base-color: #D7D2FF;
+    --button-highlight-color: #FFD2D7;
+}
+
+html, body {
+    font-family: fantasy;
+    font-size: 18px;
+    background-color: var(--background-color);
+    margin: 0px;
+    padding: 0px;
+}
+
+.center {
+    text-align: center;
+}
+
+.backdrop {
+    position: absolute;
+    padding: 16px;
+    padding-bottom: 24px;
+    min-width: 75%;
+    min-height: 75%;
+    background-color: var(--card-color);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 5px 5px;
+}
+
+.center-vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1, h2, h3, h4 {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.titledrop {
+    background-color: var(--title-color);
+    height: 80px;
+    min-width: 325px;
+    width: 50%;
+    margin: 0px auto 3% auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px;
+}
+
+.data-form div {
+    margin-bottom: 2%;
+}
+
+.data-form h3 {
+    margin: 4px;
+}
+
+.data-form input, .data-form button, .data-form select {
+    min-width: 200px;
+    width: 33%;
+    height: 48px;
+    text-align: center;
+    font-size: 18px;
+    background-color: var(--button-base-color);
+    border-radius: 5px;
+    box-shadow: 2px 2px;
+}
+
+.categorydrop {
+    background-color: var(--title-color);
+    height: 40px;
+    min-width: 325px;
+    width: 50%;
+    margin: 0px auto 1% auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px;
+}
+
+.questiondrop {
+    background-color: var(--title-color);
+    min-height: 160px;
+    min-width: 325px;
+    width: 50%;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 2px 2px;
+    margin: 0px auto 2% auto;
+}
+
+.answerdrop {
+    min-width: 250px;
+    width: 50%;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.answerdrop button {
+    margin: 1% 0px;
+    min-height: 48px;
+    text-align: center;
+    font-size: 18px;
+    background-color: var(--button-base-color);
+    border-radius: 5px;
+    box-shadow: 2px 2px;
+}
+
+button:hover, .data-form input:hover, .data-form select:hover {
+    background-color: var(--button-highlight-color);
+    transition: 0.2s;
+}
+
+footer {
+    position: absolute;
+    bottom: 2.5%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    z-index: -5;
+    color: white;
+}
+
+/* I do not know if I want this link colored :| */
+footer a:link, footer a:visited, footer a:hover, footer a:active {
+    color: white;
+}
