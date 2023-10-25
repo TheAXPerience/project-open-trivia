@@ -66,7 +66,7 @@ const setupQuestion = (question) => {
 }
 
 // use this function to start the quiz
-const beginQuiz = async (playerName, categoryName, categoryId) => {
+const beginQuiz = async (playerName, categoryId, categoryName) => {
     const questions = await getQuestions(categoryId);
 
     TRIVIA_GAME.setupGame(questions, playerName, categoryName, categoryId);
@@ -83,6 +83,7 @@ const startGame = (event) => {
     console.log("Player Name: " + name.value);
     console.log("Category ID: " + category.value);
     console.log("Category Name: " + category.options[category.selectedIndex].text);
+
     beginQuiz(name.value, parseInt(category.value), category.options[category.selectedIndex].text);
 }
 
