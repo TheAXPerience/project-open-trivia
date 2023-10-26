@@ -153,7 +153,9 @@ footer a:link, footer a:visited, footer a:hover, footer a:active {
     }
 
     .namecategorydrop {
+        width: 65%;
         flex-direction: row;
+        justify-content: space-between;
     }
 
     .namedrop, .categorydrop {
@@ -161,7 +163,7 @@ footer a:link, footer a:visited, footer a:hover, footer a:active {
         margin-right: 1px;
     }
 
-    .titledrop, .questiondrop, .answerdrop {
+    .titledrop, .answerdrop {
         width: 50%;
     }
 
@@ -175,7 +177,7 @@ footer a:link, footer a:visited, footer a:hover, footer a:active {
     }
 
     .categorydrop {
-        width: 69%;
+        width: 65%;
     }
 
     footer {
