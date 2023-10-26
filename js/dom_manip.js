@@ -31,7 +31,16 @@ class TriviaGame {
 
     // calculates the player's final score
     calculateScore() {
-
+        if (this.questions.length !== this.answers.length) {
+            return -1;
+        }
+        let score = 0;
+        for (let i = 0; i < this.questions.length; i++) {
+            if (this.questions[i].correctAnswer === this.answers[i]) {
+                score++;
+            }
+        }
+        return score;
     }
 
     // resets all values to defaults
@@ -57,22 +66,99 @@ const removeChildren = (node) => {
 
 // use this function to show the player's final score
 const setupResults = () => {
-
+    // TODO
+    alert(`Category: ${TRIVIA_GAME.currentCategory}\n${TRIVIA_GAME.playerName}'s Score:\n${TRIVIA_GAME.calculateScore()}`);
+    setupHome();
 };
+
+const clickAnswer = (event) => {
+    // add answer to list of answers
+    const chosenAnswer = event.target.value;
+    TRIVIA_GAME.addAnswer(chosenAnswer);
+
+    // either show next question or show results screen
+    const question = TRIVIA_GAME.nextQuestion();
+    if (question) {
+        setupQuestion(question);
+    } else {
+        setupResults();
+    }
+}
 
 // use this function to set up an individual question
 const setupQuestion = (question) => {
+    removeChildren(MAIN_NODE);
 
+    // name and category node
+    const nameCatNode = document.createElement("div");
+    nameCatNode.classList.add("namecategorydrop");
+    nameCatNode.classList.add("center");
+    MAIN_NODE.appendChild(nameCatNode);
+
+    // name node
+    const nameNode = document.createElement("div");
+    nameNode.classList.add("namedrop");
+    nameNode.classList.add("center-vertical");
+    nameCatNode.appendChild(nameNode);
+
+    const nameHeading = document.createElement("h4");
+    nameHeading.appendChild(document.createTextNode(TRIVIA_GAME.playerName));
+    nameHeading.classList.add("center");
+    nameNode.appendChild(nameHeading);
+
+    // category node
+    const categoryNode = document.createElement("div");
+    categoryNode.classList.add("categorydrop");
+    categoryNode.classList.add("center-vertical");
+    nameCatNode.appendChild(categoryNode);
+
+    const categoryHeading = document.createElement("h4");
+    categoryHeading.appendChild(document.createTextNode(TRIVIA_GAME.currentCategory));
+    categoryHeading.classList.add("center");
+    categoryNode.appendChild(categoryHeading);
+
+    // question node
+    const questionNode = document.createElement("div");
+    questionNode.classList.add("questiondrop");
+    MAIN_NODE.appendChild(questionNode);
+
+    const questionNumber = document.createElement("h4");
+    questionNumber.classList.add("center");
+    questionNumber.innerHTML = `Question #${TRIVIA_GAME.currentQuestion}`;
+    questionNode.appendChild(questionNumber);
+    
+    const questionHeading = document.createElement("h2");
+    questionHeading.classList.add("center");
+    // questionHeading.appendChild(document.createTextNode(question.question));
+    questionHeading.innerHTML = question.question;
+    questionNode.appendChild(questionHeading);
+
+    // answers node
+    const answerNode = document.createElement("div");
+    answerNode.classList.add("answerdrop");
+    answerNode.classList.add("center");
+    MAIN_NODE.appendChild(answerNode);
+
+    for (const ans of question.getAnswers()) {
+        const singleAnswerNode = document.createElement("button");
+        // singleAnswerNode.appendChild(document.createTextNode(ans));
+        singleAnswerNode.innerHTML = ans;
+        singleAnswerNode.value = ans;
+        answerNode.appendChild(singleAnswerNode);
+        singleAnswerNode.addEventListener("click", clickAnswer);
+    }
 }
 
 // use this function to start the quiz
 const beginQuiz = async (playerName, categoryId, categoryName) => {
+    // get the questions and initialize the game
     const questions = await getQuestions(categoryId);
-
     TRIVIA_GAME.setupGame(questions, playerName, categoryName, categoryId);
-    console.log(TRIVIA_GAME);
 
-    // TODO: actually start the game
+    // console.log(TRIVIA_GAME);
+
+    // start the game
+    setupQuestion(TRIVIA_GAME.nextQuestion());
 };
 
 // callback function on submit when player begins the game
@@ -80,11 +166,18 @@ const startGame = (event) => {
     event.preventDefault();
     const name = event.target[0];
     const category = event.target[1];
+
+    /*
     console.log("Player Name: " + name.value);
     console.log("Category ID: " + category.value);
     console.log("Category Name: " + category.options[category.selectedIndex].text);
+    */
 
-    beginQuiz(name.value, parseInt(category.value), category.options[category.selectedIndex].text);
+    beginQuiz(
+        name.value,
+        parseInt(category.value),
+        category.options[category.selectedIndex].text
+    );
 }
 
 // use this function to setup the home/launch page

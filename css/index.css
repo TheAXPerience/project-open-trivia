@@ -21,13 +21,13 @@ html, body {
 .backdrop {
     padding: 16px;
     padding-bottom: 24px;
-    width: 75%;
-    height: 75%;
+    min-width: 80%;
+    min-height: 80%;
     background-color: var(--card-color);
     position: absolute;
-    top: 50%;
+    top: 0px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 5%);
     border-radius: 10px;
     box-shadow: 5px 5px;
 }
@@ -48,8 +48,8 @@ h1, h2, h3, h4 {
     background-color: var(--title-color);
     height: 80px;
     min-width: 325px;
-    width: 50%;
-    margin: 0px auto 3% auto;
+    width: 80%;
+    margin: 0px auto 8px auto;
     border-radius: 10px;
     box-shadow: 2px 2px;
 }
@@ -73,12 +73,20 @@ h1, h2, h3, h4 {
     box-shadow: 2px 2px;
 }
 
-.categorydrop {
+.namecategorydrop {
+    min-width: 50%;
+    margin: 2px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.namedrop, .categorydrop {
     background-color: var(--title-color);
-    height: 40px;
-    min-width: 325px;
-    width: 50%;
-    margin: 0px auto 1% auto;
+    min-height: 40px;
+    min-width: 125px;
+    width: 75%;
+    margin: 1px auto;
     border-radius: 10px;
     box-shadow: 2px 2px;
 }
@@ -87,26 +95,26 @@ h1, h2, h3, h4 {
     background-color: var(--title-color);
     min-height: 160px;
     min-width: 325px;
-    width: 50%;
-    padding: 4px;
+    width: 80%;
+    padding: 0px 4px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     border-radius: 10px;
     box-shadow: 2px 2px;
-    margin: 0px auto 2% auto;
+    margin: 0px auto 8px auto;
 }
 
 .answerdrop {
     min-width: 250px;
-    width: 50%;
+    width: 80%;
     margin: 0px auto;
     display: flex;
     flex-direction: column;
 }
 
 .answerdrop button {
-    margin: 1% 0px;
+    margin: 4px 0px;
     min-height: 48px;
     text-align: center;
     font-size: 18px;
@@ -122,7 +130,7 @@ button:hover, .data-form input:hover, .data-form select:hover {
 
 footer {
     position: absolute;
-    bottom: 2.5%;
+    top: 95%;
     width: 100%;
     margin: 0px;
     padding: 0px;
@@ -133,4 +141,44 @@ footer {
 /* I do not know if I want this link colored :| */
 footer a:link, footer a:visited, footer a:hover, footer a:active {
     color: white;
+}
+
+@media screen and (min-width: 768px) {
+    .backdrop {
+        min-width: 75%;
+        min-height: 75%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .namecategorydrop {
+        flex-direction: row;
+    }
+
+    .namedrop, .categorydrop {
+        margin-left: 1px;
+        margin-right: 1px;
+    }
+
+    .titledrop, .questiondrop, .answerdrop {
+        width: 50%;
+    }
+
+    .questiondrop {
+        width: 65%;
+        padding: 0px 5%;
+    }
+
+    .namedrop {
+        width: 30%;
+    }
+
+    .categorydrop {
+        width: 69%;
+    }
+
+    footer {
+        bottom: 2.5%;
+    }
 }
