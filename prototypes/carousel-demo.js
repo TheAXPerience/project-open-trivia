@@ -36,12 +36,21 @@ class Carousel {
 }
 
 const CAROUSEL_CONSTANT = new Carousel();
+const IMAGE_CAROUSEL = new Carousel();
 
 function populateCarousel() {
     const carousel = document.getElementById("carousel");
-    const items = document.querySelectorAll(".carousel-item");
+    const items = document.querySelectorAll(".carousel-txt");
     for (const item of items) {
         CAROUSEL_CONSTANT.addElement(item);
+    }
+}
+
+function imageCarousel() {
+    const carousel = document.getElementById("carousel2");
+    const items = document.querySelectorAll(".carousel-image");
+    for (const item of items) {
+        IMAGE_CAROUSEL.addElement(item);
     }
 }
 
@@ -53,5 +62,14 @@ function carouselRight() {
     CAROUSEL_CONSTANT.moveRight(1);
 }
 
+function imageLeft() {
+    IMAGE_CAROUSEL.moveRight(-1);
+}
+
+function imageRight() {
+    IMAGE_CAROUSEL.moveRight(1);
+}
+
 populateCarousel();
+imageCarousel();
 console.log(CAROUSEL_CONSTANT)
