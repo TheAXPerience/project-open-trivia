@@ -16,7 +16,7 @@ class Carousel {
     applyTransform() {
         for (let i = 0; i < this.elements.length; i++) {
             const item = this.elements[i];
-            item.style.transform = `translateX(${(i-this.currentIndex)*100}%)`;
+            item.style.transform = `translateX(${(-this.currentIndex)*100}%)`;
             if (i === this.currentIndex) {
                 item.style.opacity = "1";
             } else {
