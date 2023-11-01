@@ -14,11 +14,7 @@ html, body {
     padding: 0px;
 }
 
-.center {
-    text-align: center;
-}
-
-.backdrop {
+#main {
     padding: 16px;
     padding-bottom: 24px;
     min-width: 80%;
@@ -30,6 +26,26 @@ html, body {
     transform: translate(-50%, 5%);
     border-radius: 10px;
     box-shadow: 5px 5px;
+    overflow-x: hidden;
+    /* display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap; */
+}
+
+.center {
+    text-align: center;
+}
+
+.backdrop {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    margin: 0px;
+    position: absolute;
+    transition: all 0.75s;
+    transition-timing-function: ease;
+    transform: translateX(100%);
+    /* opacity: 0; */
 }
 
 .center-vertical {
@@ -144,12 +160,13 @@ footer a:link, footer a:visited, footer a:hover, footer a:active {
 }
 
 @media screen and (min-width: 768px) {
-    .backdrop {
+    #main {
         min-width: 75%;
         min-height: 75%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        overflow: hidden;
     }
 
     .namecategorydrop {

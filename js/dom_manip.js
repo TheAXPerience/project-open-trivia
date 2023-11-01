@@ -3,6 +3,51 @@
     The main() function at the bottom provides an example of using functions from fetch_api.js to retrieve data from the API
 */
 
+// remove all child nodes of a node
+const removeChildren = (node) => {
+    while (node.firstChild) {
+        node.removeChild(node.firstChild);
+    }
+}
+
+class TriviaCarousel {
+    constructor(mainNode) {
+        this.mainNode = mainNode;
+        this.nodes = [];
+    }
+
+    adjustX() {
+        for (let i = 0; i < this.nodes.length; i++) {
+            const node = this.nodes[i];
+            node.style.transform = `translateX(${i * 100}%)`;
+            /*
+            if (i === 0) {
+                node.style.opacity = "1";
+            } else {
+                node.style.opacity = "0";
+            } */
+        }
+    }
+
+    addNode(node) {
+        this.nodes.push(node);
+        this.mainNode.appendChild(node);
+        this.adjustX();
+    }
+
+    nextNode() {
+        setTimeout(() => {
+            if (this.nodes.length <= 1) {
+                return;
+            }
+            const removedNode = this.nodes.shift();
+            removedNode.style.transform = "translateX(-100%)";
+            this.adjustX();
+            setTimeout(() => this.mainNode.removeChild(this.mainNode.firstChild), 500);
+        }, 100);
+    }
+}
+
 class TriviaGame {
     constructor() {
         this.clear();
@@ -54,14 +99,16 @@ class TriviaGame {
     }
 }
 
-const MAIN_NODE = document.querySelector("#main");
+removeChildren(document.querySelector("#main"));
+const MAIN_CAROUSEL = new TriviaCarousel(document.querySelector("#main"));
 const TRIVIA_GAME = new TriviaGame();
 
-// remove all child nodes of a node
-const removeChildren = (node) => {
-    while (node.firstChild) {
-        node.removeChild(node.firstChild);
-    }
+const setupBackdrop = () => {
+    const mainNode = document.createElement("section");
+    mainNode.classList.add("center");
+    mainNode.classList.add("center-vertical");
+    mainNode.classList.add("backdrop");
+    return mainNode;
 }
 
 // use this function to show the player's final score
@@ -87,13 +134,13 @@ const clickAnswer = (event) => {
 
 // use this function to set up an individual question
 const setupQuestion = (question) => {
-    removeChildren(MAIN_NODE);
+    const mainNode = setupBackdrop();
 
     // name and category node
     const nameCatNode = document.createElement("div");
     nameCatNode.classList.add("namecategorydrop");
     nameCatNode.classList.add("center");
-    MAIN_NODE.appendChild(nameCatNode);
+    mainNode.appendChild(nameCatNode);
 
     // name node
     const nameNode = document.createElement("div");
@@ -120,7 +167,7 @@ const setupQuestion = (question) => {
     // question node
     const questionNode = document.createElement("div");
     questionNode.classList.add("questiondrop");
-    MAIN_NODE.appendChild(questionNode);
+    mainNode.appendChild(questionNode);
 
     const questionNumber = document.createElement("h4");
     questionNumber.classList.add("center");
@@ -137,8 +184,9 @@ const setupQuestion = (question) => {
     const answerNode = document.createElement("div");
     answerNode.classList.add("answerdrop");
     answerNode.classList.add("center");
-    MAIN_NODE.appendChild(answerNode);
+    mainNode.appendChild(answerNode);
 
+    // add answer choices
     for (const ans of question.getAnswers()) {
         const singleAnswerNode = document.createElement("button");
         // singleAnswerNode.appendChild(document.createTextNode(ans));
@@ -147,6 +195,10 @@ const setupQuestion = (question) => {
         answerNode.appendChild(singleAnswerNode);
         singleAnswerNode.addEventListener("click", clickAnswer);
     }
+
+    // add to carousel
+    MAIN_CAROUSEL.addNode(mainNode);
+    MAIN_CAROUSEL.nextNode();
 }
 
 // use this function to start the quiz
@@ -182,7 +234,7 @@ const startGame = (event) => {
 
 // use this function to setup the home/launch page
 const setupHome = async () => {
-    removeChildren(MAIN_NODE);
+    const mainNode = setupBackdrop();
     const categoryList = await getCategories();
     categoryList.unshift({id: 0, name: "All Categories"});
 
@@ -190,7 +242,7 @@ const setupHome = async () => {
     const titleNode = document.createElement("div");
     titleNode.classList.add("titledrop");
     titleNode.classList.add("center-vertical");
-    MAIN_NODE.appendChild(titleNode);
+    mainNode.appendChild(titleNode);
 
     const titleHeading = document.createElement("h1");
     titleHeading.appendChild(document.createTextNode("Open Trivia Game"));
@@ -201,7 +253,7 @@ const setupHome = async () => {
     const formNode = document.createElement("form");
     formNode.classList.add("center");
     formNode.classList.add("data-form");
-    MAIN_NODE.appendChild(formNode);
+    mainNode.appendChild(formNode);
 
     // player name node
     const nameDiv = document.createElement("div");
@@ -242,25 +294,22 @@ const setupHome = async () => {
 
     // add event listener to form
     formNode.addEventListener("submit", startGame);
+
+    // add to carousel
+    MAIN_CAROUSEL.addNode(mainNode);
+    MAIN_CAROUSEL.nextNode();
 };
 
 // main function
 const main = async function() {
-    const categories = await getCategories();
-    categories.unshift({id: 0, name: "All Categories"});
-    console.log(categories);
-
-    // get a random category to check it out
-    const category = categories[Math.floor(Math.random() * categories.length)];
-
-    const questions = await getQuestions(category.id, NUMBER_QUESTIONS);
-    console.log(`\nChosen category: ${category.name}`);
-    for (const q of questions) {
-        console.log(`Q: ${q.question}`);
-        for (const opt of q.getAnswers()) {
-            console.log(`> ${opt}`);
-        }
-    }
+    // set up a Now Loading screen
+    const loadingNode = setupBackdrop();
+    
+    // now loading text
+    const loadingText = document.createElement("h1");
+    loadingText.textContent = "Loading...";
+    loadingNode.appendChild(loadingText);
+    MAIN_CAROUSEL.addNode(loadingNode);
+    
+    setTimeout(setupHome, 250);
 }
-
-setupHome();
