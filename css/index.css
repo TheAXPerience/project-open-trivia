@@ -144,6 +144,65 @@ button:hover, .data-form input:hover, .data-form select:hover {
     transition: 0.2s;
 }
 
+.carousel {
+    background-color: var(--title-color);
+    position: relative;
+    min-width: 325px;
+    width: 80%;
+    min-height: 250px;
+    margin: 2px auto;
+    overflow-x: hidden;
+    border-radius: 10px;
+    box-shadow: 2px 2px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.carousel-item {
+    flex: 0 0 100%;
+    margin: 0px;
+    position: relative;
+    transition: all 0.5s;
+    transition-timing-function: ease;
+    opacity: 0%;
+}
+
+.carousel-txt {
+    width: 100%;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.carousel-button {
+    width: 50%;
+    height: 100%;
+    background-color: var(--button-base-color);
+    opacity: 1%;
+    z-index: 5;
+}
+
+.carousel-button:hover {
+    opacity: 25%;
+}
+
+.button-left {
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    transform: translateY(-50%);
+}
+
+.button-right {
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    transform: translateY(-50%);
+}
+
 footer {
     position: absolute;
     top: 95%;

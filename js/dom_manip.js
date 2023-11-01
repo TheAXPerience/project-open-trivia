@@ -99,6 +99,102 @@ class TriviaGame {
     }
 }
 
+class ResultsCarousel {
+    constructor() {
+        this.node = document.createElement("section");
+        this.node.classList.add("carousel");
+
+        const leftButton = document.createElement("button");
+        leftButton.classList.add("carousel-button");
+        leftButton.classList.add("button-left");
+        leftButton.addEventListener("click", () => this.moveRight(-1));
+        this.node.appendChild(leftButton);
+
+        const rightButton = document.createElement("button");
+        rightButton.classList.add("carousel-button");
+        rightButton.classList.add("button-right");
+        rightButton.addEventListener("click", () => this.moveRight(1));
+        this.node.appendChild(rightButton);
+
+        this.currentIndex = 0;
+        this.elements = [];
+    }
+
+    addElement(element) {
+        this.elements.push(element);
+        this.node.appendChild(element);
+        this.applyTransform();
+    }
+
+    addScore(name, score) {
+        const scoreNode = document.createElement("div");
+        scoreNode.classList.add("carousel-item");
+        scoreNode.classList.add("carousel-txt");
+
+        // announcing score
+        const headingNode = document.createElement("h3");
+        headingNode.textContent = `${name}'s Score:`;
+        headingNode.style.fontSize = "1.5rem";
+        scoreNode.appendChild(headingNode);
+
+        // score
+        const scoreHeadingNode = document.createElement("h1");
+        scoreHeadingNode.textContent = `${score}`;
+        scoreHeadingNode.style.fontSize = "3.5rem";
+        scoreNode.appendChild(scoreHeadingNode);
+
+        this.addElement(scoreNode);
+    }
+
+    addQuestionAnswer(qno, question, guess, answer) {
+        const questionNode = setupQuestionNode(qno, question);
+        questionNode.classList.add("carousel-item");
+        questionNode.classList.add("carousel-txt");
+        questionNode.classList.remove("questiondrop");
+
+        const guessNode = document.createElement("h3");
+        const answerNode = document.createElement("h3");
+        guessNode.innerHTML = `Your Answer: ${guess}`;
+        answerNode.innerHTML = `Correct Answer: ${answer}`;
+        guessNode.style.color = "darkblue";
+        if (guess === answer) {
+            answerNode.style.color = "darkgreen";
+        } else {
+            answerNode.style.color = "darkred";
+        }
+        
+        questionNode.appendChild(guessNode);
+        questionNode.appendChild(answerNode);
+
+        this.addElement(questionNode);
+    }
+
+    clearElements() {
+        this.elements = [];
+    }
+
+    applyTransform() {
+        for (let i = 0; i < this.elements.length; i++) {
+            const item = this.elements[i];
+            item.style.transform = `translateX(${(-this.currentIndex)*100}%)`;
+            if (i === this.currentIndex) {
+                item.style.opacity = "1";
+            } else {
+                item.style.opacity = "0";
+            }
+        }
+    }
+
+    moveRight(x) {
+        this.currentIndex += x;
+        while (this.currentIndex < 0) {
+            this.currentIndex += this.elements.length;
+        }
+        this.currentIndex %= this.elements.length;
+        this.applyTransform();
+    }
+}
+
 removeChildren(document.querySelector("#main"));
 const MAIN_CAROUSEL = new TriviaCarousel(document.querySelector("#main"));
 const TRIVIA_GAME = new TriviaGame();
@@ -147,8 +243,23 @@ function setupResults() {
     mainNode.appendChild(setupCategoryNode());
 
     // TODO: carousel!
+    const carousel = new ResultsCarousel();
+
     // first page: name and score
+    carousel.addScore(TRIVIA_GAME.playerName, TRIVIA_GAME.calculateScore());
+
     // rest of pages: question, guess, answer
+    for (let i = 0; i < TRIVIA_GAME.questions.length; i++) {
+        carousel.addQuestionAnswer(
+            i+1,
+            TRIVIA_GAME.questions[i].question, 
+            TRIVIA_GAME.answers[i],
+            TRIVIA_GAME.questions[i].correctAnswer
+        );
+    }
+
+    // add to main node
+    mainNode.appendChild(carousel.node);
 
     // return to home button
     const answerdrop = document.createElement("div");
@@ -157,6 +268,7 @@ function setupResults() {
 
     const homeButton = document.createElement("button");
     homeButton.textContent = "Return to Home Menu";
+    homeButton.addEventListener("click", setupHome);
     answerdrop.appendChild(homeButton);
 
     MAIN_CAROUSEL.addNode(mainNode);
@@ -177,6 +289,23 @@ function clickAnswer(event) {
     }
 }
 
+function setupQuestionNode(qno, question) {
+    const questionNode = document.createElement("div");
+    questionNode.classList.add("questiondrop");
+
+    const questionNumber = document.createElement("h4");
+    questionNumber.classList.add("center");
+    questionNumber.innerHTML = `Question #${qno}`;
+    questionNode.appendChild(questionNumber);
+    
+    const questionHeading = document.createElement("h2");
+    questionHeading.classList.add("center");
+    questionHeading.innerHTML = question;
+    questionNode.appendChild(questionHeading);
+
+    return questionNode;
+}
+
 // use this function to set up an individual question
 function setupQuestion(question) {
     const mainNode = setupBackdrop();
@@ -185,20 +314,8 @@ function setupQuestion(question) {
     mainNode.appendChild(setupCategoryNode());
 
     // question node
-    const questionNode = document.createElement("div");
-    questionNode.classList.add("questiondrop");
+    const questionNode = setupQuestionNode(TRIVIA_GAME.currentQuestion, question.question);
     mainNode.appendChild(questionNode);
-
-    const questionNumber = document.createElement("h4");
-    questionNumber.classList.add("center");
-    questionNumber.innerHTML = `Question #${TRIVIA_GAME.currentQuestion}`;
-    questionNode.appendChild(questionNumber);
-    
-    const questionHeading = document.createElement("h2");
-    questionHeading.classList.add("center");
-    // questionHeading.appendChild(document.createTextNode(question.question));
-    questionHeading.innerHTML = question.question;
-    questionNode.appendChild(questionHeading);
 
     // answers node
     const answerNode = document.createElement("div");
