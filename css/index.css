@@ -1,0 +1,203 @@
+:root {
+    --background-color: #322653;
+    --card-color: #8062D6;
+    --title-color: #9288F8;
+    --button-base-color: #D7D2FF;
+    --button-highlight-color: #FFD2D7;
+}
+
+html, body {
+    font-family: fantasy;
+    font-size: 18px;
+    background-color: var(--background-color);
+    margin: 0px;
+    padding: 0px;
+}
+
+#main {
+    padding: 16px;
+    padding-bottom: 24px;
+    min-width: 80%;
+    min-height: 80%;
+    background-color: var(--card-color);
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%, 5%);
+    border-radius: 10px;
+    box-shadow: 5px 5px;
+    overflow-x: hidden;
+    /* display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap; */
+}
+
+.center {
+    text-align: center;
+}
+
+.backdrop {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    margin: 0px;
+    position: absolute;
+    transition: all 0.75s;
+    transition-timing-function: ease;
+    transform: translateX(100%);
+    /* opacity: 0; */
+}
+
+.center-vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1, h2, h3, h4 {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.titledrop {
+    background-color: var(--title-color);
+    height: 80px;
+    min-width: 325px;
+    width: 80%;
+    margin: 0px auto 8px auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px;
+}
+
+.data-form div {
+    margin-bottom: 2%;
+}
+
+.data-form h3 {
+    margin: 4px;
+}
+
+.data-form input, .data-form button, .data-form select {
+    min-width: 200px;
+    width: 33%;
+    height: 48px;
+    text-align: center;
+    font-size: 18px;
+    background-color: var(--button-base-color);
+    border-radius: 5px;
+    box-shadow: 2px 2px;
+}
+
+.namecategorydrop {
+    min-width: 50%;
+    margin: 2px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.namedrop, .categorydrop {
+    background-color: var(--title-color);
+    min-height: 40px;
+    min-width: 125px;
+    width: 75%;
+    margin: 1px auto;
+    border-radius: 10px;
+    box-shadow: 2px 2px;
+}
+
+.questiondrop {
+    background-color: var(--title-color);
+    min-height: 160px;
+    min-width: 325px;
+    width: 80%;
+    padding: 0px 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 2px 2px;
+    margin: 0px auto 8px auto;
+}
+
+.answerdrop {
+    min-width: 250px;
+    width: 80%;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.answerdrop button {
+    margin: 4px 0px;
+    min-height: 48px;
+    text-align: center;
+    font-size: 18px;
+    background-color: var(--button-base-color);
+    border-radius: 5px;
+    box-shadow: 2px 2px;
+}
+
+button:hover, .data-form input:hover, .data-form select:hover {
+    background-color: var(--button-highlight-color);
+    transition: 0.2s;
+}
+
+footer {
+    position: absolute;
+    top: 95%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    z-index: -5;
+    color: white;
+}
+
+/* I do not know if I want this link colored :| */
+footer a:link, footer a:visited, footer a:hover, footer a:active {
+    color: white;
+}
+
+@media screen and (min-width: 768px) {
+    #main {
+        min-width: 75%;
+        min-height: 75%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        overflow: hidden;
+    }
+
+    .namecategorydrop {
+        width: 65%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .namedrop, .categorydrop {
+        margin-left: 1px;
+        margin-right: 1px;
+    }
+
+    .titledrop, .answerdrop {
+        width: 50%;
+    }
+
+    .questiondrop {
+        width: 65%;
+        padding: 0px 5%;
+    }
+
+    .namedrop {
+        width: 30%;
+    }
+
+    .categorydrop {
+        width: 65%;
+    }
+
+    footer {
+        bottom: 2.5%;
+    }
+}
