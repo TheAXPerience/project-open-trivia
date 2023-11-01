@@ -103,7 +103,7 @@ removeChildren(document.querySelector("#main"));
 const MAIN_CAROUSEL = new TriviaCarousel(document.querySelector("#main"));
 const TRIVIA_GAME = new TriviaGame();
 
-const setupBackdrop = () => {
+function setupBackdrop() {
     const mainNode = document.createElement("section");
     mainNode.classList.add("center");
     mainNode.classList.add("center-vertical");
@@ -111,14 +111,59 @@ const setupBackdrop = () => {
     return mainNode;
 }
 
+function setupCategoryNode() {
+    const nameCatNode = document.createElement("div");
+    nameCatNode.classList.add("namecategorydrop");
+    nameCatNode.classList.add("center");
+
+    const nameNode = document.createElement("div");
+    nameNode.classList.add("namedrop");
+    nameNode.classList.add("center-vertical");
+    nameCatNode.appendChild(nameNode);
+
+    const nameHeading = document.createElement("h4");
+    nameHeading.appendChild(document.createTextNode(TRIVIA_GAME.playerName));
+    nameHeading.classList.add("center");
+    nameNode.appendChild(nameHeading);
+
+    const categoryNode = document.createElement("div");
+    categoryNode.classList.add("categorydrop");
+    categoryNode.classList.add("center-vertical");
+    nameCatNode.appendChild(categoryNode);
+
+    const categoryHeading = document.createElement("h4");
+    categoryHeading.appendChild(document.createTextNode(TRIVIA_GAME.currentCategory));
+    categoryHeading.classList.add("center");
+    categoryNode.appendChild(categoryHeading);
+
+    return nameCatNode;
+}
+
 // use this function to show the player's final score
-const setupResults = () => {
-    // TODO
-    alert(`Category: ${TRIVIA_GAME.currentCategory}\n${TRIVIA_GAME.playerName}'s Score:\n${TRIVIA_GAME.calculateScore()}`);
-    setupHome();
+function setupResults() {
+    const mainNode = setupBackdrop();
+
+    // name category
+    mainNode.appendChild(setupCategoryNode());
+
+    // TODO: carousel!
+    // first page: name and score
+    // rest of pages: question, guess, answer
+
+    // return to home button
+    const answerdrop = document.createElement("div");
+    answerdrop.classList.add("answerdrop");
+    mainNode.appendChild(answerdrop);
+
+    const homeButton = document.createElement("button");
+    homeButton.textContent = "Return to Home Menu";
+    answerdrop.appendChild(homeButton);
+
+    MAIN_CAROUSEL.addNode(mainNode);
+    MAIN_CAROUSEL.nextNode();    
 };
 
-const clickAnswer = (event) => {
+function clickAnswer(event) {
     // add answer to list of answers
     const chosenAnswer = event.target.value;
     TRIVIA_GAME.addAnswer(chosenAnswer);
@@ -133,36 +178,11 @@ const clickAnswer = (event) => {
 }
 
 // use this function to set up an individual question
-const setupQuestion = (question) => {
+function setupQuestion(question) {
     const mainNode = setupBackdrop();
 
     // name and category node
-    const nameCatNode = document.createElement("div");
-    nameCatNode.classList.add("namecategorydrop");
-    nameCatNode.classList.add("center");
-    mainNode.appendChild(nameCatNode);
-
-    // name node
-    const nameNode = document.createElement("div");
-    nameNode.classList.add("namedrop");
-    nameNode.classList.add("center-vertical");
-    nameCatNode.appendChild(nameNode);
-
-    const nameHeading = document.createElement("h4");
-    nameHeading.appendChild(document.createTextNode(TRIVIA_GAME.playerName));
-    nameHeading.classList.add("center");
-    nameNode.appendChild(nameHeading);
-
-    // category node
-    const categoryNode = document.createElement("div");
-    categoryNode.classList.add("categorydrop");
-    categoryNode.classList.add("center-vertical");
-    nameCatNode.appendChild(categoryNode);
-
-    const categoryHeading = document.createElement("h4");
-    categoryHeading.appendChild(document.createTextNode(TRIVIA_GAME.currentCategory));
-    categoryHeading.classList.add("center");
-    categoryNode.appendChild(categoryHeading);
+    mainNode.appendChild(setupCategoryNode());
 
     // question node
     const questionNode = document.createElement("div");
@@ -214,7 +234,7 @@ const beginQuiz = async (playerName, categoryId, categoryName) => {
 };
 
 // callback function on submit when player begins the game
-const startGame = (event) => {
+function startGame(event) {
     event.preventDefault();
     const name = event.target[0];
     const category = event.target[1];
@@ -301,13 +321,13 @@ const setupHome = async () => {
 };
 
 // main function
-const main = async function() {
+function main() {
     // set up a Now Loading screen
     const loadingNode = setupBackdrop();
     
     // now loading text
     const loadingText = document.createElement("h1");
-    loadingText.textContent = "Loading...";
+    loadingText.textContent = "Now Loading...";
     loadingNode.appendChild(loadingText);
     MAIN_CAROUSEL.addNode(loadingNode);
     
