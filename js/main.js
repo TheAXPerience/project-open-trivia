@@ -71,7 +71,20 @@ function setupQuestion(question) {
     const mainNode = setupBackdrop();
 
     // name and category node
-    mainNode.appendChild(setupCategoryNode());
+    const categoryNode = setupCategoryNode();
+    mainNode.appendChild(categoryNode);
+    
+    // timer node
+    const timerNode = document.createElement("div");
+    timerNode.classList.add("namedrop");
+    timerNode.classList.add("center-vertical");
+    categoryNode.appendChild(timerNode);
+
+    const timerLabel = document.createElement("h3");
+    timerLabel.textContent = "30";
+    timerLabel.classList.add("center");
+    timerNode.appendChild(timerLabel);
+    
 
     // question node
     const questionNode = setupQuestionNode(TRIVIA_GAME.currentQuestion, question.question);
@@ -116,7 +129,7 @@ function setupResults() {
         carousel.addQuestionAnswer(
             i+1,
             TRIVIA_GAME.questions[i].question, 
-            TRIVIA_GAME.answers[i],
+            TRIVIA_GAME.answers[i][0],
             TRIVIA_GAME.questions[i].correctAnswer
         );
     }

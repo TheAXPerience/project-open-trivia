@@ -70,8 +70,8 @@ class TriviaGame {
     }
 
     // adds an answer to the list of answers
-    addAnswer(ans) {
-        this.answers.push(ans);
+    addAnswer(ans, time=1) {
+        this.answers.push([ans, time]);
     }
 
     // calculates the player's final score
@@ -81,8 +81,8 @@ class TriviaGame {
         }
         let score = 0;
         for (let i = 0; i < this.questions.length; i++) {
-            if (this.questions[i].correctAnswer === this.answers[i]) {
-                score++;
+            if (this.questions[i].correctAnswer === this.answers[i][0]) {
+                score += this.answers[i][1];
             }
         }
         return score;
@@ -212,15 +212,17 @@ function setupCategoryNode() {
     nameCatNode.classList.add("namecategorydrop");
     nameCatNode.classList.add("center");
 
+    /*
     const nameNode = document.createElement("div");
     nameNode.classList.add("namedrop");
     nameNode.classList.add("center-vertical");
     nameCatNode.appendChild(nameNode);
 
     const nameHeading = document.createElement("h4");
-    nameHeading.appendChild(document.createTextNode(TRIVIA_GAME.playerName));
+    nameHeading.textContent = TRIVIA_GAME.playerName;
     nameHeading.classList.add("center");
     nameNode.appendChild(nameHeading);
+    */
 
     const categoryNode = document.createElement("div");
     categoryNode.classList.add("categorydrop");

@@ -90,18 +90,18 @@ h1, h2, h3, h4 {
 }
 
 .namecategorydrop {
-    min-width: 50%;
+    min-width: 75%;
     margin: 2px auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .namedrop, .categorydrop {
     background-color: var(--title-color);
     min-height: 40px;
     min-width: 125px;
-    width: 75%;
+    width: 100%;
     margin: 1px auto;
     border-radius: 10px;
     box-shadow: 2px 2px;
@@ -231,7 +231,7 @@ footer a:link, footer a:visited, footer a:hover, footer a:active {
     .namecategorydrop {
         width: 65%;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
     }
 
     .namedrop, .categorydrop {
