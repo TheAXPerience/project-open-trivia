@@ -146,7 +146,7 @@ class ResultsCarousel {
         this.addElement(scoreNode);
     }
 
-    addQuestionAnswer(qno, question, guess, answer) {
+    addQuestionAnswer(qno, question, guess, answer, time) {
         const questionNode = setupQuestionNode(qno, question);
         questionNode.classList.add("carousel-item");
         questionNode.classList.add("carousel-txt");
@@ -154,17 +154,22 @@ class ResultsCarousel {
 
         const guessNode = document.createElement("h3");
         const answerNode = document.createElement("h3");
+        const pointsNode = document.createElement("h2");
         guessNode.innerHTML = `Your Answer: ${guess}`;
         answerNode.innerHTML = `Correct Answer: ${answer}`;
+        pointsNode.textContent = `+${guess === answer ? time : 0} points`;
         guessNode.style.color = "darkblue";
         if (guess === answer) {
             answerNode.style.color = "darkgreen";
+            pointsNode.style.color = "darkgreen";
         } else {
             answerNode.style.color = "darkred";
+            pointsNode.style.color = "darkred";
         }
         
         questionNode.appendChild(guessNode);
         questionNode.appendChild(answerNode);
+        questionNode.appendChild(pointsNode);
 
         this.addElement(questionNode);
     }

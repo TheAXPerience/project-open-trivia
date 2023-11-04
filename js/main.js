@@ -1,3 +1,5 @@
+const TIMER_DURATION = 10; // can change later
+
 // use this function to setup the home/launch page
 async function setupHome() {
     const mainNode = setupBackdrop();
@@ -68,6 +70,8 @@ async function setupHome() {
 
 // use this function to set up an individual question
 function setupQuestion(question) {
+    let time = TIMER_DURATION;
+    let timeId = 0;
     const mainNode = setupBackdrop();
 
     // name and category node
@@ -81,10 +85,9 @@ function setupQuestion(question) {
     categoryNode.appendChild(timerNode);
 
     const timerLabel = document.createElement("h3");
-    timerLabel.textContent = "30";
+    timerLabel.textContent = time;
     timerLabel.classList.add("center");
     timerNode.appendChild(timerLabel);
-    
 
     // question node
     const questionNode = setupQuestionNode(TRIVIA_GAME.currentQuestion, question.question);
@@ -103,12 +106,30 @@ function setupQuestion(question) {
         singleAnswerNode.innerHTML = ans;
         singleAnswerNode.value = ans;
         answerNode.appendChild(singleAnswerNode);
-        singleAnswerNode.addEventListener("click", clickAnswer);
+        singleAnswerNode.addEventListener("click", (event) => {
+            // stop timer and select an answer
+            clearInterval(timeId);
+            selectAnswer(event.target.value, time);
+        });
     }
 
     // add to carousel
     MAIN_CAROUSEL.addNode(mainNode);
     MAIN_CAROUSEL.nextNode();
+
+    // set and start timer interval
+    setTimeout(() => {
+        timeId = setInterval(() => {
+            time--;
+            timerLabel.textContent = time;
+
+            // end if timer reaches 0
+            if (time <= 0) {
+                clearInterval(timeId);
+                selectAnswer("", 0);
+            }
+        }, 1000);
+    }, 500); // add delay bc of transitions between questions
 };
 
 // use this function to show the player's final score
@@ -130,7 +151,8 @@ function setupResults() {
             i+1,
             TRIVIA_GAME.questions[i].question, 
             TRIVIA_GAME.answers[i][0],
-            TRIVIA_GAME.questions[i].correctAnswer
+            TRIVIA_GAME.questions[i].correctAnswer,
+            TRIVIA_GAME.answers[i][1]
         );
     }
 
@@ -151,10 +173,9 @@ function setupResults() {
     MAIN_CAROUSEL.nextNode();    
 };
 
-function clickAnswer(event) {
+function selectAnswer(answer, time) {
     // add answer to list of answers
-    const chosenAnswer = event.target.value;
-    TRIVIA_GAME.addAnswer(chosenAnswer);
+    TRIVIA_GAME.addAnswer(answer, time);
 
     // either show next question or show results screen
     const question = TRIVIA_GAME.nextQuestion();
@@ -179,6 +200,9 @@ async function beginQuiz (playerName, categoryId, categoryName) {
 function startGame(event) {
     event.preventDefault();
     const name = event.target[0];
+    if (name === "") {
+        name = "Anonymous";
+    }
     const category = event.target[1];
 
     beginQuiz(

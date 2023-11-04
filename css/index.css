@@ -79,7 +79,7 @@ h1, h2, h3, h4 {
 }
 
 .data-form input, .data-form button, .data-form select {
-    min-width: 200px;
+    min-width: 250px;
     width: 33%;
     height: 48px;
     text-align: center;
@@ -258,5 +258,16 @@ footer a:link, footer a:visited, footer a:hover, footer a:active {
 
     footer {
         bottom: 2.5%;
+    }
+
+    .data-form input, .data-form button, .data-form select {
+        min-width: 200px;
+        width: 33%;
+        height: 48px;
+        text-align: center;
+        font-size: 18px;
+        background-color: var(--button-base-color);
+        border-radius: 5px;
+        box-shadow: 2px 2px;
     }
 }
