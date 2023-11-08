@@ -174,6 +174,11 @@ function setupResults() {
 };
 
 function selectAnswer(answer, time) {
+    // disable all buttons (new buttons won't be affected)
+    document.querySelectorAll("button").forEach((button) => {
+        button.disabled = true;
+    })
+
     // add answer to list of answers
     TRIVIA_GAME.addAnswer(answer, time);
 
