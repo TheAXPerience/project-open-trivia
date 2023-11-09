@@ -1,6 +1,6 @@
 const LOCAL_STORAGE_KEY = "leaderboards";
-const HIGH_SCORE_LIMIT = 10; // limit for number of absolute high scores to save
-const CATEGORY_SCORE_LIMIT = 5; // limit for number of scores to save per category
+const HIGH_SCORE_LIMIT = 5; // limit for number of absolute high scores to save
+const CATEGORY_SCORE_LIMIT = 3; // limit for number of scores to save per category
 
 class LocalLeaderboards {
     constructor() {
@@ -43,12 +43,14 @@ class LocalLeaderboards {
         }
 
         // if array's length > limit set by const values at top of file
-        if (highScores.length > HIGH_SCORE_LIMIT) {
+        while (highScores.length > HIGH_SCORE_LIMIT) {
             highScores.pop();
         }
-        if (catScores.length > CATEGORY_SCORE_LIMIT) {
+        while (catScores.length > CATEGORY_SCORE_LIMIT) {
             catScores.pop();
         }
+
+        this.save();
     }
 
     getAllLeaderboards() {

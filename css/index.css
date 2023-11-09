@@ -78,7 +78,7 @@ h1, h2, h3, h4 {
     margin: 4px;
 }
 
-.data-form input, .data-form button, .data-form select {
+.data-form input, .data-form button, .data-form select, .leaderboardbutton {
     min-width: 250px;
     width: 33%;
     height: 48px;
@@ -87,6 +87,10 @@ h1, h2, h3, h4 {
     background-color: var(--button-base-color);
     border-radius: 5px;
     box-shadow: 2px 2px;
+}
+
+.leaderboardbutton {
+    margin: 8px auto;
 }
 
 .namecategorydrop {
@@ -149,7 +153,7 @@ button:hover, .data-form input:hover, .data-form select:hover {
     position: relative;
     min-width: 325px;
     width: 80%;
-    min-height: 250px;
+    min-height: 275px;
     margin: 2px auto;
     overflow-x: hidden;
     border-radius: 10px;
@@ -216,6 +220,33 @@ footer {
 /* I do not know if I want this link colored :| */
 footer a:link, footer a:visited, footer a:hover, footer a:active {
     color: white;
+}
+
+tr {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+td {
+    background-color: var(--button-base-color);
+    border-radius: 5px;
+    box-shadow: 1px 1px;
+    margin: 2px;
+    min-height: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.namecattd {
+    min-width: 50%;
+    max-width: 70%;
+}
+
+.scoretd {
+    min-width: 30%;
 }
 
 @media screen and (min-width: 768px) {

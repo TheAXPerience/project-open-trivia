@@ -121,6 +121,8 @@ class ResultsCarousel {
     }
 
     addElement(element) {
+        element.classList.add("carousel-item");
+        element.classList.add("carousel-txt");
         this.elements.push(element);
         this.node.appendChild(element);
         this.applyTransform();
@@ -128,8 +130,6 @@ class ResultsCarousel {
 
     addScore(name, score) {
         const scoreNode = document.createElement("div");
-        scoreNode.classList.add("carousel-item");
-        scoreNode.classList.add("carousel-txt");
 
         // announcing score
         const headingNode = document.createElement("h3");
@@ -148,8 +148,6 @@ class ResultsCarousel {
 
     addQuestionAnswer(qno, question, guess, answer, time) {
         const questionNode = setupQuestionNode(qno, question);
-        questionNode.classList.add("carousel-item");
-        questionNode.classList.add("carousel-txt");
         questionNode.classList.remove("questiondrop");
 
         const guessNode = document.createElement("h3");
@@ -212,7 +210,7 @@ function setupBackdrop() {
     return mainNode;
 }
 
-function setupCategoryNode() {
+function setupCategoryNode(txt=TRIVIA_GAME.currentCategory) {
     const nameCatNode = document.createElement("div");
     nameCatNode.classList.add("namecategorydrop");
     nameCatNode.classList.add("center");
@@ -235,7 +233,7 @@ function setupCategoryNode() {
     nameCatNode.appendChild(categoryNode);
 
     const categoryHeading = document.createElement("h4");
-    categoryHeading.appendChild(document.createTextNode(TRIVIA_GAME.currentCategory));
+    categoryHeading.appendChild(document.createTextNode(txt));
     categoryHeading.classList.add("center");
     categoryNode.appendChild(categoryHeading);
 

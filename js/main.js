@@ -63,6 +63,13 @@ async function setupHome() {
     // add event listener to form
     formNode.addEventListener("submit", startGame);
 
+    // add leaderboards button
+    const leaderboardButton = document.createElement("button");
+    leaderboardButton.classList.add("leaderboardbutton");
+    leaderboardButton.textContent = "High Scores";
+    leaderboardButton.addEventListener("click", setupLeaderboards);
+    mainNode.appendChild(leaderboardButton);
+
     // add to carousel
     MAIN_CAROUSEL.addNode(mainNode);
     MAIN_CAROUSEL.nextNode();
@@ -136,6 +143,10 @@ function setupQuestion(question) {
 function setupResults() {
     const mainNode = setupBackdrop();
 
+    // add to leaderboards
+    const score = TRIVIA_GAME.calculateScore();
+    LEADERBOARDS.addToLeaderboards(TRIVIA_GAME.playerName, TRIVIA_GAME.currentCategory, score);
+
     // name category
     mainNode.appendChild(setupCategoryNode());
 
@@ -143,7 +154,7 @@ function setupResults() {
     const carousel = new ResultsCarousel();
 
     // first page: name and score
-    carousel.addScore(TRIVIA_GAME.playerName, TRIVIA_GAME.calculateScore());
+    carousel.addScore(TRIVIA_GAME.playerName, score);
 
     // rest of pages: question, guess, answer
     for (let i = 0; i < TRIVIA_GAME.questions.length; i++) {
@@ -170,7 +181,74 @@ function setupResults() {
     answerdrop.appendChild(homeButton);
 
     MAIN_CAROUSEL.addNode(mainNode);
-    MAIN_CAROUSEL.nextNode();    
+    MAIN_CAROUSEL.nextNode();
+};
+
+// use this function to show the high scores
+function setupLeaderboards() {
+    const mainNode = setupBackdrop();
+
+    // name category
+    mainNode.appendChild(setupCategoryNode("High Scores"));
+
+    // carousel!
+    const carousel = new ResultsCarousel();
+
+    // rest of pages: question, guess, answer
+    for (const lb of LEADERBOARDS.getAllLeaderboards()) {
+        const lbNode = document.createElement("div");
+        lbNode.classList.add("leaderboard");
+
+        const lbHeading = document.createElement("h3");
+        lbHeading.textContent = lb.category;
+        lbNode.appendChild(lbHeading);
+
+        if (lb.scores.length) {
+            const lbTable = document.createElement("table");
+            lbNode.appendChild(lbTable);
+    
+            for (const ncs of lb.scores) {
+                const lbRow = document.createElement("tr");
+                lbTable.appendChild(lbRow);
+    
+                const name = document.createElement("td");
+                name.textContent = ncs.name;
+                name.classList.add("namecattd");
+                lbRow.appendChild(name);
+    
+                if (lb.category === 'High Scores') {
+                    name.textContent = `${ncs.name} (${ncs.category})`;
+                }
+    
+                const score = document.createElement("td");
+                score.textContent = ncs.score;
+                score.classList.add("scoretd");
+                lbRow.appendChild(score);
+            }
+        } else {
+            const p = document.createElement("h4");
+            p.textContent = "\nNo Entries\n";
+            lbNode.appendChild(p);
+        }
+
+        carousel.addElement(lbNode);
+    }
+
+    // add to main node
+    mainNode.appendChild(carousel.node);
+
+    // return to home button
+    const answerdrop = document.createElement("div");
+    answerdrop.classList.add("answerdrop");
+    mainNode.appendChild(answerdrop);
+
+    const homeButton = document.createElement("button");
+    homeButton.textContent = "Return to Home Menu";
+    homeButton.addEventListener("click", setupHome);
+    answerdrop.appendChild(homeButton);
+
+    MAIN_CAROUSEL.addNode(mainNode);
+    MAIN_CAROUSEL.nextNode();
 };
 
 function selectAnswer(answer, time) {
